@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "TKoU/ScreenSpaceSnow"
+Shader "MoonAntonio/ScreenSpaceSnow"
 {
 	Properties
 	{
@@ -8,7 +8,6 @@ Shader "TKoU/ScreenSpaceSnow"
 	}
 		SubShader
 	{
-		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
 
 		Pass
