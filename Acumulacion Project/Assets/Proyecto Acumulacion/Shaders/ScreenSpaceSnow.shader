@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "MoonAntonio/ScreenSpaceSnow"
+Shader "TKoU/ScreenSpaceSnow"
 {
 	Properties
 	{
@@ -8,6 +8,7 @@ Shader "MoonAntonio/ScreenSpaceSnow"
 	}
 		SubShader
 	{
+		// No culling or depth
 		Cull Off ZWrite Off ZTest Always
 
 		Pass
@@ -38,9 +39,40 @@ Shader "MoonAntonio/ScreenSpaceSnow"
 				return o;
 			}
 
-			fixed4 frag(v2f i) : SV_Target
+			sampler2D _MainTex;
+			sampler2D _CameraDepthNormalsTexture;
+			float4x4 _CamToWorld;
+
+			sampler2D _SnowTex;
+			float _SnowTexScale;
+
+			half4 _SnowColor;
+
+			fixed _BottomThreshold;
+			fixed _TopThreshold;
+
+
+			half4 frag(v2f i) : SV_Target
 			{
-				// TODO
+				half3 normal;
+				float depth;
+
+				DecodeDepthNormal(tex2D(_CameraDepthNormalsTexture, i.uv), depth, normal);
+				normal = mul((float3x3)_CamToWorld, normal);
+
+				half snowAmount = normal.g;
+				half scale = (_BottomThreshold + 1 - _TopThreshold) / 1 + 1;
+				snowAmount = saturate((snowAmount - _BottomThreshold) * scale);
+
+				float2 p11_22 = float2(unity_CameraProjection._11, unity_CameraProjection._22);
+				float3 vpos = float3((i.uv * 2 - 1) / p11_22, -1) * depth;
+				float4 wpos = mul(_CamToWorld, float4(vpos, 1));
+				wpos += float4(_WorldSpaceCameraPos, 0) / _ProjectionParams.z;
+
+				half4 snowColor = tex2D(_SnowTex, wpos.xz * _SnowTexScale * _ProjectionParams.z) * _SnowColor;
+
+				half4 col = tex2D(_MainTex, i.uv);
+				return lerp(col, snowColor, snowAmount);
 			}
 			ENDCG
 		}

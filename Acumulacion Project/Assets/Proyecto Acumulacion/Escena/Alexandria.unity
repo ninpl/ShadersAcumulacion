@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 240783153}
   - component: {fileID: 240783152}
   - component: {fileID: 240783151}
+  - component: {fileID: 240783157}
   - component: {fileID: 240783156}
   - component: {fileID: 240783155}
   m_Layer: 0
@@ -172,12 +173,12 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
-  m_AllowMSAA: 1
+  m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
@@ -372,6 +373,22 @@ MonoBehaviour:
     type: 3}
   colorCorrectionSelectiveShader: {fileID: 4800000, guid: e515e0f94cefc4c0db54b45cba621544,
     type: 3}
+--- !u!114 &240783157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 240783150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b676b12f777e044b71eea514483161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SnowTexture: {fileID: 2800000, guid: 68386fc9897223346a683105b4dc1662, type: 3}
+  SnowColor: {r: 1, g: 1, b: 1, a: 1}
+  SnowTextureScale: 0.48
+  BottomThreshold: 0.557
+  TopThreshold: 0.6
 --- !u!1001 &280323801
 Prefab:
   m_ObjectHideFlags: 0
